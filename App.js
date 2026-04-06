@@ -65,11 +65,20 @@ function renderNavbar() {
   const searchWrap = createElement('div', { className: 'search-wrap' });
   searchWrap.appendChild(createElement('span', { className: 'search-icon' }, '🔍'));
   const searchInput = createElement('input', {
-    type: 'text',
-    placeholder: 'Search countries...',
-    value: search,
-    oninput: (e) => { search = e.target.value; render(); }
-  });
+  type: 'text',
+  placeholder: 'Search countries...',
+  value: search,
+  oninput: (e) => { 
+    search = e.target.value; 
+    render(); 
+    // After render, find the new input and restore focus + cursor position
+    const newInput = document.querySelector('.search-wrap input');
+    if (newInput) {
+      newInput.focus();
+      newInput.setSelectionRange(newInput.value.length, newInput.value.length);
+    }
+  }
+});
   searchWrap.appendChild(searchInput);
   nav.appendChild(searchWrap);
 
